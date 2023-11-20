@@ -1,13 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Diagon</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-	<h1>Welcome to the Diagon home page!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagon</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan&display=swap" rel="stylesheet">
+  <!-- <script src="script.js" defer></script> -->
+</head>
+
+<body>
+  <nav class="bg-diagon-dark fixed h-screen w-32 px-2.5 flex flex-col justify-around text-white">
+    <a class="text-center" href="/profile">Profile</a>
+    <a class="text-center" href="/how-to-play">How to play</a>
+    <a class="text-center" href="/customise">Customise</a>
+    <a class="text-center" href="/settings">Settings</a>
+  </nav>
+  <a href="/customise">
+    <div id="diagons" class="absolute top-0 right-0 border-4 border-diagon-dark">
+      <p class="text-diagon-dark font-normal text-2xl tracking-wide p-3">Diagons: <span id="num-diagons">0</span></p>
+    </div>
+  </a>
+  <main class="bg-diagon-light h-screen flex items-center justify-evenly ml-32">
+    <div id="left-col">
+      <h2>Statistics</h2>
+      <ul class="text-2xl">
+        <li>Wins: <span id="wins">0</span></li>
+        <li>Losses: <span id="losses">0</span></li>
+        <li>Games Played: <span id="games-played">0</span></li>
+        <li>Tier: <span id="tier">0</span></li>
+        <li>Ranking: <span id="ranking">0</span></li>
+        <li><abbr title="Win-Loss Ratio" class="no-underline">WLR</abbr>: <span id="wlr">0</span></li>
+        <li>Streak: <span id="">0</span></li>
+      </ul>
+    </div>
+    <div id="centre-col" class="text-center">
+      <h1 class="text-diagon-dark ">DIAGON</h1>
+      <p class="text-xl text-diagon-dark mb-2">Welcome, <span class="username">Guest187</span></p>
+      <div class="flex justify-evenly">
+        <a href="/play" class="text-diagon-dark p-2">
+          <svg height="100" width="50" class="translate-x-2/3">
+            <polygon points="0,0 50,50 0,100" class="fill-diagon-dark">
+          </svg>
+          Play with friends
+        </a>
+        <a href="/play/computer" class="text-diagon-dark p-2">
+          <svg height="100" width="50" class="translate-x-2/3">
+            <polygon points="0,0 50,50 0,100" class="fill-diagon-dark">
+          </svg>
+          Play against bots
+        </a>
+      </div>
+      <div class="mt-20">
+        <a href="/daily-challenge">
+          <h2 class="text-5xl text-red-600">Daily Challenge</h2> <!-- TODO: change colour -->
+        </a>
+      </div>
+    </div>
+    <div id="right-col" class="pb-40">
+      <h2>Other heading</h2>
+      <p class="text-2xl">Other text</p>
+    </div>
+  </main>
+</body>
+
 </html>
