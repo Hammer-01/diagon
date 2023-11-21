@@ -589,6 +589,10 @@ h2 {
   width: 8rem;
 }
 
+.max-w-md {
+  max-width: 28rem;
+}
+
 .translate-x-2\/3 {
   --tw-translate-x: 66.666667%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -691,9 +695,9 @@ h2 {
   color: rgb(132 60 12 / var(--tw-text-opacity));
 }
 
-.text-red-600 {
+.text-diagon-red {
   --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
+  color: rgb(189 23 23 / var(--tw-text-opacity));
 }
 
 .text-white {
