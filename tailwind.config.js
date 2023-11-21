@@ -10,6 +10,7 @@ module.exports = {
         'diagon': {
           'light': '#c5a485',
           'dark': '#843c0c',
+          'red': '#bd1717',
         }
       },
     }
