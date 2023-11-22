@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagon - Play</title>
+  <link rel="stylesheet" href="/diagon/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.8.0/lib/p5.js"></script> <!-- TODO: use minified version when finished -->
+  <script src="../game.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <nav class="bg-diagon-dark fixed h-screen w-32 px-2.5 flex flex-col justify-around text-white">
+    <a class="text-center" href="/diagon/profile">Profile</a>
+    <a class="text-center" href="/diagon/how-to-play">How to play</a>
+    <a class="text-center" href="/diagon/customise">Customise</a>
+    <a class="text-center" href="/diagon/settings">Settings</a>
+  </nav>
+  <a href="/diagon/customise">
+    <div id="diagons" class="absolute top-0 right-0 border-4 border-diagon-dark">
+      <p class="text-diagon-dark font-normal text-2xl tracking-wide p-3">Diagons: <span id="num-diagons">0</span>
+      </p>
+    </div>
+  </a>
+  <main class="bg-diagon-light h-screen flex items-center justify-evenly ml-32">
+    <div id="board-container" class="w-1/2">
+      <canvas id="board"></canvas>
+    </div>
+  </main>
+</body>
+
+</html>
