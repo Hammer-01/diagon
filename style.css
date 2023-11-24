@@ -759,6 +759,11 @@ h2 {
   letter-spacing: 0.025em;
 }
 
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
 .text-diagon-dark {
   --tw-text-opacity: 1;
   color: rgb(132 60 12 / var(--tw-text-opacity));
@@ -769,11 +774,6 @@ h2 {
   color: rgb(189 23 23 / var(--tw-text-opacity));
 }
 
-.text-green-500 {
-  --tw-text-opacity: 1;
-  color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-
 .text-transparent {
   color: transparent;
 }
@@ -781,11 +781,6 @@ h2 {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-black {
-  --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .no-underline {
