@@ -1,10 +1,13 @@
+let diagon;
+
 function setup() {
     const board = document.getElementById('board');
-    const size = board.parentNode.clientWidth;
-    createCanvas(size, size, board);
+    const boardSize = board.parentNode.clientWidth;
+    createCanvas(boardSize, boardSize, board);
+    diagon = new Diagon();
 }
 
 function draw() {
-    drawBoard();
+    diagon.draw();
 
 }
