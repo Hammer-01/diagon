@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Diagon</title>
+    <link rel="stylesheet" href="/diagon/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="script.js" defer></script> -->
+  </head>
+
+  <body class="bg-diagon-light">
+    <nav
+      class="bg-diagon-dark fixed h-screen w-32 px-2.5 flex flex-col justify-around text-white"
+    >
+      <a class="text-center text-white" href="/diagon/">Home</a>
+      <a class="text-center" href="/diagon/how-to-play">How to play</a>
+      <a class="text-center" href="/diagon/customise">Customise</a>
+      <a class="text-center" href="/diagon/settings">Settings</a>
+    </nav>
+    <a href="/diagon/customise">
+      <div
+        id="diagons"
+        class="absolute top-0 right-0 border-4 border-diagon-dark"
+      >
+        <p class="text-diagon-dark font-normal text-2xl tracking-wide p-3">
+          Diagons: <span id="num-diagons">0</span>
+        </p>
+      </div>
+    </a>
+    <main class="h-screen ml-32">
+      <div class="p-28">
+        <div class="p-20 w-full bg-diagon-dark">
+          <h1 class="text-center">Customise</h1>
+          <div id="stones" class="grid grid-cols-5 justify-center">
+            <!-- TODO: create with javascript and show use or buy label etc. -->
+            <img src="/diagon/assets/Stones/stone-1.png">
+            <img src="/diagon/assets/Stones/stone-2.png">
+            <img src="/diagon/assets/Stones/stone-3.png">
+            <img src="/diagon/assets/Stones/stone-4.png">
+            <img src="/diagon/assets/Stones/stone-5.png">
+              <!-- <h2 class="pl-12">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2> -->
+              <img src="/diagon/assets/Stones/stone-6.png">
+              <img src="/diagon/assets/Stones/stone-7.png">
+              <img src="/diagon/assets/Stones/stone-8.png">
+              <img src="/diagon/assets/Stones/stone-9.png">
+              <img src="/diagon/assets/Stones/stone-10.png">
+              <!-- <h2 class="pl-12">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2> -->
+              <img src="/diagon/assets/Stones/stone-11.png">
+              <img src="/diagon/assets/Stones/stone-12.png">
+              <img src="/diagon/assets/Stones/stone-13.png">
+              <img src="/diagon/assets/Stones/stone-14.png">
+              <img src="/diagon/assets/Stones/stone-15.png">
+              <!-- <h2 class="pl-12">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2> -->
+              <img src="/diagon/assets/Stones/stone-16.png">
+              <img src="/diagon/assets/Stones/stone-17.png">
+              <img src="/diagon/assets/Stones/stone-18.png">
+              <img src="/diagon/assets/Stones/stone-19.png">
+              <img src="/diagon/assets/Stones/stone-20.png">
+              <!-- <h2 class="pl-12">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2>
+              <h2 class="ml-36">Use</h2> -->
+          </div>
+          <div>
+            <img src="/diagon/assets/Stones/lock.png" />
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
