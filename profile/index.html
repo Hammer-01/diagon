@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diagon</title>
+  <link rel="stylesheet" href="/diagon/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan&display=swap" rel="stylesheet">
+  <!-- <script src="script.js" defer></script> -->
+</head>
+
+<body>
+  <nav class="bg-diagon-dark fixed h-screen w-32 px-2.5 flex flex-col justify-around text-white">
+    <a class="text-center text-white" href="/diagon/">Home</a>
+    <a class="text-center" href="/diagon/how-to-play">How to play</a>
+    <a class="text-center" href="/diagon/customise">Customise</a>
+    <a class="text-center" href="/diagon/settings">Settings</a>
+  </nav>
+  <a href="/diagon/customise">
+    <div id="diagons" class="absolute top-0 right-0 border-4 border-diagon-dark">
+      <p class="text-diagon-dark font-normal text-2xl tracking-wide p-3">Diagons: <span id="num-diagons">0</span>
+      </p>
+    </div>
+  </a>
+  <main class="bg-diagon-light h-screen ml-32 flex">
+    <div class="p-12">
+      <ul class="flex text-center flex-col w-52">
+        <li class="mb-5"><img src="/diagon/assets/default-profile.png"></li>
+        <li class="text-2xl text-diagon-dark mb-2 pb-5"><span class="username">Guest187</span></li>
+        <li class="pb-5 text-2xl">Tier: <span id="tier">0</span></li>
+        <li class="pb-5 text-2xl">Ranking: <span id="ranking">0</span></li>
+        <li class="text-2xl">Current Stone:</li>
+        <li><img src="/diagon/assets/stones/stone-1.png"></li>
+        <li>Click to Change</li>
+      </ul>       
+    </div>
+    <div id="leaderboard">
+      <div>
+        <h2>Friends</h2>
+        <div>
+          <p>You have no friends :(</p>
+        </div>
+      </div>
+      <div>
+        <h2>Ranking</h2>
+        <div hidden>
+          
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

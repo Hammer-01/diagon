@@ -569,8 +569,16 @@ h2 {
   margin-bottom: 0.5rem;
 }
 
+.mb-5 {
+  margin-bottom: 1.25rem;
+}
+
 .ml-32 {
   margin-left: 8rem;
+}
+
+.ml-36 {
+  margin-left: 9rem;
 }
 
 .mt-20 {
@@ -585,12 +593,24 @@ h2 {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
+.hidden {
+  display: none;
+}
+
 .h-screen {
   height: 100vh;
 }
 
 .w-32 {
   width: 8rem;
+}
+
+.w-52 {
+  width: 13rem;
 }
 
 .w-60 {
@@ -601,12 +621,24 @@ h2 {
   width: 24rem;
 }
 
+.w-full {
+  width: 100%;
+}
+
+.grid-cols-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .flex-col {
   flex-direction: column;
 }
 
 .items-center {
   align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 .justify-around {
@@ -668,6 +700,18 @@ h2 {
   background-position: 0% 0%;
 }
 
+.p-12 {
+  padding: 3rem;
+}
+
+.p-20 {
+  padding: 5rem;
+}
+
+.p-28 {
+  padding: 7rem;
+}
+
 .p-3 {
   padding: 0.75rem;
 }
@@ -688,6 +732,10 @@ h2 {
 
 .pb-5 {
   padding-bottom: 1.25rem;
+}
+
+.pl-12 {
+  padding-left: 3rem;
 }
 
 .pt-10 {
@@ -765,6 +813,10 @@ h2 {
 
 .duration-1000 {
   transition-duration: 1000ms;
+}
+
+#stones img {
+  padding: 1rem;
 }
 
 .hover\:bg-pos-100:hover {
