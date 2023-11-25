@@ -828,11 +828,6 @@ h2 {
   padding: 1rem;
 }
 
-#stones img::after {
-  --tw-content: Use;
-  content: var(--tw-content);
-}
-
 .hover\:bg-pos-100:hover {
   background-position: 100% 100%;
 }
