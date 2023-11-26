@@ -565,6 +565,42 @@ h2 {
   top: 0px;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-40 {
+  top: 10rem;
+}
+
+.left-96 {
+  left: 24rem;
+}
+
+.right-96 {
+  right: 24rem;
+}
+
+.top-52 {
+  top: 13rem;
+}
+
+.left-9 {
+  left: 2.25rem;
+}
+
+.left-52 {
+  left: 13rem;
+}
+
+.left-48 {
+  left: 12rem;
+}
+
+.top-56 {
+  top: 14rem;
+}
+
 .m-auto {
   margin: auto;
 }
@@ -591,6 +627,14 @@ h2 {
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.ml-96 {
+  margin-left: 24rem;
+}
+
+.-ml-96 {
+  margin-left: -24rem;
 }
 
 .flex {
@@ -639,6 +683,14 @@ h2 {
 
 .w-full {
   width: 100%;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-28 {
+  width: 7rem;
 }
 
 .grid-cols-1 {
@@ -776,6 +828,10 @@ h2 {
 
 .pt-10 {
   padding-top: 2.5rem;
+}
+
+.pl-96 {
+  padding-left: 24rem;
 }
 
 .text-center {
