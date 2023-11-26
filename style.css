@@ -605,12 +605,12 @@ h2 {
   display: none;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .h-24 {
   height: 6rem;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-20 {
@@ -728,6 +728,10 @@ h2 {
   background-position: 0% 0%;
 }
 
+.p-10 {
+  padding: 2.5rem;
+}
+
 .p-12 {
   padding: 3rem;
 }
@@ -746,10 +750,6 @@ h2 {
 
 .p-4 {
   padding: 1rem;
-}
-
-.p-10 {
-  padding: 2.5rem;
 }
 
 .px-2 {
