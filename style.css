@@ -557,8 +557,12 @@ h2 {
   position: absolute;
 }
 
-.left-52 {
-  left: 13rem;
+.relative {
+  position: relative;
+}
+
+.sticky {
+  position: sticky;
 }
 
 .right-0 {
@@ -569,8 +573,36 @@ h2 {
   top: 0px;
 }
 
-.top-56 {
-  top: 14rem;
+.top-7 {
+  top: 1.75rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-96 {
+  top: 24rem;
+}
+
+.top-3 {
+  top: 0.75rem;
+}
+
+.top-32 {
+  top: 8rem;
+}
+
+.top-2 {
+  top: 0.5rem;
+}
+
+.top-1 {
+  top: 0.25rem;
+}
+
+.top-16 {
+  top: 4rem;
 }
 
 .m-auto {
@@ -591,10 +623,6 @@ h2 {
 
 .ml-36 {
   margin-left: 9rem;
-}
-
-.ml-96 {
-  margin-left: 24rem;
 }
 
 .mt-20 {
@@ -655,6 +683,66 @@ h2 {
 
 .w-full {
   width: 100%;
+}
+
+.w-3 {
+  width: 0.75rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-7 {
+  width: 1.75rem;
+}
+
+.w-9 {
+  width: 2.25rem;
+}
+
+.w-\[96\] {
+  width: 96;
+}
+
+.w-\[\] {
+  width: ;
+}
+
+.w-\[30rem\] {
+  width: 30rem;
+}
+
+.w-\[28rem\] {
+  width: 28rem;
+}
+
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-\[30px\] {
+  width: 30px;
+}
+
+.w-\[20rem\] {
+  width: 20rem;
+}
+
+.w-\[10rem\] {
+  width: 10rem;
+}
+
+.w-\[7rem\] {
+  width: 7rem;
+}
+
+.w-\[7\.5rem\] {
+  width: 7.5rem;
+}
+
+.w-\[7\.4rem\] {
+  width: 7.4rem;
 }
 
 .grid-cols-1 {
@@ -878,4 +966,14 @@ h2 {
 .hover\:text-green-600:hover {
   --tw-text-opacity: 1;
   color: rgb(22 163 74 / var(--tw-text-opacity));
+}
+
+@media (min-width: 768px) {
+  .md\:top-1 {
+    top: 0.25rem;
+  }
+
+  .md\:top-20 {
+    top: 5rem;
+  }
 }
