@@ -8,9 +8,9 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
     if (this.numTiles % 2 !== 0) {
         throw RangeError('numTiles must be an even number, was ' + this.numTiles);
     }
-    this.ts = width / ((this.numTiles + 2) / 2); // diagonal length (tileSize)
-    this.bw = boardWidth ?? width;
-    this.bh = boardHeight ?? height;
+    this.ts = width / ((this.numTiles + 6) / 2); // diagonal length (tileSize)
+    this.bw = boardWidth ?? width - 2*this.ts;
+    this.bh = boardHeight ?? height - 2*this.ts;
 
     // distances for centre square
     this.c1 = (this.numTiles + 2) / 4;
@@ -41,6 +41,9 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
 }
 
 Diagon.prototype.drawBoard = function() {
+    push();
+    translate(this.ts, this.ts);
+
     // board base
     noStroke();
     fill(this.boardColours.primary);
@@ -58,21 +61,33 @@ Diagon.prototype.drawBoard = function() {
     // gridlines
     stroke('black');
     strokeWeight(2);
-    for (let s = this.ts; s < this.bw*2; s += this.ts) {
+    for (let s = 2*this.ts; s <= this.bw; s += this.ts) {
         line(0, s, s, 0);
+        line(this.bw-s, this.bh, this.bw, this.bh-s);
         line(this.bw-s, 0, this.bw, s);
+        line(0, this.bh-s, s, this.bh);
     }
 
     // corners
+    noStroke();
     fill('black');
     triangle(0, 0, this.ts, 0, 0, this.ts);
     triangle(this.bw, 0, this.bw-this.ts, 0, this.bw, this.ts);
     triangle(this.bw, this.bh, this.bw-this.ts, this.bh, this.bw, this.bh-this.ts);
     triangle(0, this.bh, this.ts, this.bh, 0, this.bh-this.ts);
+    
+    // remove any bits that are hanging outside the board (i.e. line endings)
+    noErase(); // make sure p5._renderer._isErasing is set (workaround for a bug where it isn't)
+    erase();
+    noFill();
+    stroke(0);
+    square(0, 0, this.bw);
+
+    pop();
 }
 
 Diagon.prototype.drawSides = function() {
-
+    // this.players.forEach(p => p.stones.forEach(s => s.draw(0, 0)))
 }
 
 Diagon.prototype.draw = function() {
@@ -125,8 +140,9 @@ function Tile({isWall, isDark}) {
 }
 
 
-function Player(numStones) {
+function Player(stoneId, numStones) {
     this.numStones = numStones ?? 5;
+    this.stones = Array(numStones).map(() => new Stone(this, stoneId));
 }
 
 Player.prototype.getIndex = function() {
@@ -135,4 +151,15 @@ Player.prototype.getIndex = function() {
 
 Player.prototype.setIndex = function(index) {
     this.index = index;
+}
+
+
+function Stone(player, id) {
+    this.player = player; // is this necessary / a good idea
+    this.img = loadImage(`https://hammer-01.github.io/diagon/assets/Stones/stone-${id}.png`) // TODO: change link when merged
+}
+
+Stone.prototype.draw = function(x, y) {
+    imageMode(CENTER); // TODO: confirm this is desired
+    image(this.img, x, y); // TODO: add width and height
 }
