@@ -12,6 +12,8 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
     this.bw = boardWidth ?? width - 2*this.ts;
     this.bh = boardHeight ?? height - 2*this.ts;
 
+    resizeCanvas(this.bw + 2*this.ts, this.bh);
+
     // distances for centre square
     this.c1 = (this.numTiles + 2) / 4;
     this.c2 = this.c1 - 1;
@@ -22,6 +24,7 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
         tertiary: "#190d00",
     };
     
+    // setup the board and populate with Tiles
     this.board = [...Array(this.numTiles)].map(() => Array(this.numTiles));
     let halfNT = this.numTiles/2;
     for (i = 0; i < halfNT; i++) {
@@ -42,12 +45,13 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
 
 Diagon.prototype.drawBoard = function() {
     push();
-    translate(this.ts, this.ts);
+    translate(this.ts, 0);
 
     // board base
     noStroke();
     fill(this.boardColours.primary);
     square(0, 0, this.bw);
+    clip(() => square(0, 0, this.bw)); // make sure board edges are clean
 
     // dark x
     fill(this.boardColours.secondary);
@@ -76,23 +80,24 @@ Diagon.prototype.drawBoard = function() {
     triangle(this.bw, this.bh, this.bw-this.ts, this.bh, this.bw, this.bh-this.ts);
     triangle(0, this.bh, this.ts, this.bh, 0, this.bh-this.ts);
     
-    // remove any bits that are hanging outside the board (i.e. line endings)
-    noErase(); // make sure p5._renderer._isErasing is set (workaround for a bug where it isn't)
-    erase();
-    noFill();
-    stroke(0);
-    square(0, 0, this.bw);
-
     pop();
 }
 
-Diagon.prototype.drawSides = function() {
-    // this.players.forEach(p => p.stones.forEach(s => s.draw(0, 0)))
+Diagon.prototype.drawStones = function() {
+    this.players.forEach(p => p.stones.forEach(s => {
+        if (s.pos !== null) {
+            s.draw(s.pos.x, s.pos.y);
+        } else {
+            // stone is on the side of the board
+            // TODO: figure out a way to check for other side stones
+            //       and then draw in it in the correct position
+        }
+    }));
 }
 
 Diagon.prototype.draw = function() {
     this.drawBoard();
-    this.drawSides();
+    this.drawStones();
 }
 
 Diagon.prototype.getPosition = function() {
@@ -154,9 +159,10 @@ Player.prototype.setIndex = function(index) {
 }
 
 
-function Stone(player, id) {
+function Stone(player, id, position) {
     this.player = player; // is this necessary / a good idea
     this.img = loadImage(`https://hammer-01.github.io/diagon/assets/Stones/stone-${id}.png`) // TODO: change link when merged
+    this.pos = position || null;
 }
 
 Stone.prototype.draw = function(x, y) {
