@@ -4,19 +4,30 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
         p.setIndex(i);
     });
 
+    /** the number of tiles on the board (corner to corner) @type {number} */
     this.numTiles = numTiles ?? 10;
     if (this.numTiles % 2 !== 0) {
         throw RangeError('numTiles must be an even number, was ' + this.numTiles);
     }
-    this.ts = width / ((this.numTiles + 6) / 2); // diagonal length (tileSize)
+    /** half numTiles @type {number} */
+    this.hnt = this.numTiles / 2;
+
+    /** tile size (diagonal length) @type {number} */
+    this.ts = width / ((this.numTiles + 6) / 2);
+    /** half tileSize @type {number} */
+    this.hts = this.ts / 2;
+
+    /** board width @type {number} */
     this.bw = boardWidth ?? width - 2*this.ts;
+    /** board height @type {number} */
     this.bh = boardHeight ?? height - 2*this.ts;
 
-    resizeCanvas(this.bw + 2*this.ts, this.bh);
+    /** half board width @type {number} */
+    this.hbw = this.bw / 2;
+    /** half board height @type {number} */
+    this.hbh = this.bh / 2;
 
-    // distances for centre square
-    this.c1 = (this.numTiles + 2) / 4;
-    this.c2 = this.c1 - 1;
+    resizeCanvas(this.bw + 2*this.ts, this.bh);
 
     this.boardColours = boardColours ?? {
         primary: "#964b00",
@@ -26,11 +37,10 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
     
     // setup the board and populate with Tiles
     this.board = [...Array(this.numTiles)].map(() => Array(this.numTiles));
-    let halfNT = this.numTiles/2;
-    for (i = 0; i < halfNT; i++) {
-        for (j = 0; j < halfNT; j++) {
-            let isWall = j < halfNT - 2 - i;
-            let isDark = j == halfNT || j == halfNT - 1 || i == halfNT || i == halfNT - 1;
+    for (i = 0; i < this.hnt; i++) {
+        for (j = 0; j < this.hnt; j++) {
+            let isWall = j < this.hnt - 2 - i;
+            let isDark = j == this.hnt || j == this.hnt - 1 || i == this.hnt || i == this.hnt - 1;
             let options = {isWall, isDark};
             this.board[i][j] = new Tile(options);
             this.board[i][this.numTiles-1-j] = new Tile(options);
@@ -55,55 +65,46 @@ Diagon.prototype.drawBoard = function() {
 
     // win squares
     fill(this.boardColours.secondary);
-    beginShape();
-    vertex(this.c1*this.ts, this.c2*this.ts)
-    vertex((this.c2 + 0.5)*this.ts, (this.c1 - 0.5)*this.ts)
-    vertex(this.c1*this.ts, this.c1*this.ts)
-    vertex((this.c2 + 0.5)*this.ts, (this.c1 + 0.5)*this.ts)
-    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
-    vertex((this.c2 + 1.5)*this.ts, (this.c1 + 0.5)*this.ts)
-    vertex(this.c1*this.ts, this.c1*this.ts)
-    vertex((this.c2 + 1.5)*this.ts, (this.c1 - 0.5)*this.ts)
-    endShape(CLOSE)
+    this.drawTile(this.numTiles / 4, this.numTiles / 4);
+    this.drawTile(this.numTiles / 4, this.numTiles / 4 + 1);
 
-    //triangle highlight
-    fill(this.boardColours.tertiary);
-    beginShape();
-    vertex(this.c1*this.ts, this.c2*this.ts)
-    vertex((this.c2 + 1.5)*this.ts, (this.c1 - 0.5)*this.ts)
-    vertex((this.c1 + 2.5)*this.ts, (this.c2 - 1.5)*this.ts)
-    vertex((this.c1 + 2)*this.ts, (this.c2 - 2)*this.ts)
-    endShape(CLOSE)
-
-    beginShape();
-    vertex(this.c1*this.ts, this.c2*this.ts)
-    vertex((this.c2 + 0.5)*this.ts, (this.c1 - 0.5)*this.ts)
-    vertex((this.c1 - 2.5)*this.ts, (this.c1 - 2.5)*this.ts)
-    vertex((this.c1 - 2)*this.ts, (this.c1 - 3)*this.ts)
-    endShape(CLOSE)
-
-    beginShape();
-    vertex((this.c2 + 0.5)*this.ts, (this.c1 + 0.5)*this.ts)
-    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
-    vertex((this.c1 - 2)*this.ts, (this.c1 + 3)*this.ts)
-    vertex((this.c1 - 2.5)*this.ts, (this.c1 + 2.5)*this.ts)
-    endShape(CLOSE)
-
-    beginShape();
-    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
-    vertex((this.c2 + 1.5)*this.ts, (this.c1 + 0.5)*this.ts)
-    vertex((this.c1 + 2.5)*this.ts, (this.c1 + 2.5)*this.ts)
-    vertex((this.c1 + 2)*this.ts, (this.c1 + 3)*this.ts)
-    endShape(CLOSE)
+    // centreline gradients
+    // top left
+    linearGradient(
+        this.hts, this.hts, this.ts, 0, this.hbw+this.hts, this.hbh-this.hts, this.hbw, this.hbh,
+        this.hbw, this.hbh, this.hbw+this.hts, this.hbh-this.hts,
+        [0, '#fffa'], [1, '#0000']
+    );
+    // bottom right
+    linearGradient(
+        this.hbw-this.hts, this.hbh+this.hts, this.bw-this.ts, this.bh, this.bw-this.hts, this.bh-this.hts, this.hbw, this.hbh,
+        this.hbw-this.hts, this.hbh+this.hts, this.hbw, this.hbh,
+        [0, '#0000'], [1, '#fffa']
+    );
+    // top right
+    linearGradient(
+        this.hbw-this.hts, this.hbh-this.hts, this.bw-this.ts, 0, this.bw-this.hts, this.hts, this.hbw, this.hbh,
+        this.hbw, this.hbh, this.hbw-this.hts, this.hbh-this.hts,
+        [0, '#fffa'], [1, '#0000']
+    );
+    // bottom left
+    linearGradient(
+        this.hts, this.bh-this.hts, this.ts, this.bh, this.hbw+this.hts, this.hbh+this.hts, this.hbw, this.hbh,
+        this.hbw+this.hts, this.hbh+this.hts, this.hbw, this.hbh,
+        [0, '#0000'], [1, '#fffa']
+    );
 
     // gridlines
     stroke('black');
     strokeWeight(2);
-    for (let s = 2*this.ts; s <= this.bw; s += this.ts) {
-        if (s === 6*this.ts) {
+    for (let i = 2; i <= this.hnt + 1; i++) {
+        // use lighter gridlines for the middle
+        if (i === this.hnt + 1) {
             strokeWeight(4);
             stroke('beige');
         }
+        
+        let s = i * this.ts;
         line(0, s, s, 0);
         line(this.bw-s, this.bh, this.bw, this.bh-s);
         line(this.bw-s, 0, this.bw, s);
@@ -119,6 +120,12 @@ Diagon.prototype.drawBoard = function() {
     triangle(0, this.bh, this.ts, this.bh, 0, this.bh-this.ts);
     
     pop();
+}
+
+Diagon.prototype.drawTile = function(x, y) {
+    x *= this.ts;
+    y *= this.ts;
+    quad(x, y, x+this.hts, y-this.hts, x+this.ts, y, x+this.hts, y+this.hts);
 }
 
 Diagon.prototype.drawStones = function() {
@@ -206,4 +213,31 @@ function Stone(player, id, position) {
 Stone.prototype.draw = function(x, y) {
     imageMode(CENTER); // TODO: confirm this is desired
     image(this.img, x, y); // TODO: add width and height
+}
+
+
+/****** Utility Functions ******/
+/**
+ * Draws a quad with a linear gradient
+ * @param {number} x0
+ * @param {number} y0
+ * @param {number} x1
+ * @param {number} y1
+ * @param {number} x2
+ * @param {number} y2
+ * @param {number} x3
+ * @param {number} y3
+ * @param {number} startX - the start x coordinate of the gradient
+ * @param {number} startY - the start y coordinate of the gradient
+ * @param {number} endX - the end x coordinate of the gradient
+ * @param {number} endY - the end y coordinate of the gradient
+ * @param {number[][]} colorStops - an array of color stops
+ */
+function linearGradient(x0, y0, x1, y1, x2, y2, x3, y3, startX, startY, endX, endY, ...colorStops) {
+    let gradient = drawingContext.createLinearGradient(startX, startY, endX, endY);
+    for (let i = 0; i < colorStops.length; i++) {
+        gradient.addColorStop(...colorStops[i]);
+    }
+    drawingContext.fillStyle = gradient;
+    quad(x0, y0, x1, y1, x2, y2, x3, y3);
 }
