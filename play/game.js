@@ -20,8 +20,8 @@ function Diagon(players, boardWidth, boardHeight, boardColours, numTiles) {
 
     this.boardColours = boardColours ?? {
         primary: "#964b00",
-        secondary: "#3e1f00",
-        tertiary: "#190d00",
+        secondary: "#875e2f",
+        tertiary: "hotpink",
     };
     
     // setup the board and populate with Tiles
@@ -53,19 +53,57 @@ Diagon.prototype.drawBoard = function() {
     square(0, 0, this.bw);
     clip(() => square(0, 0, this.bw)); // make sure board edges are clean
 
-    // dark x
+    // win squares
     fill(this.boardColours.secondary);
-    quad(0, this.ts, this.ts, 0, this.bw, this.bh-this.ts, this.bw-this.ts, this.bh);
-    quad(this.bw, this.ts, this.bw-this.ts, 0, 0, this.bh-this.ts, this.ts, this.bh);
+    beginShape();
+    vertex(this.c1*this.ts, this.c2*this.ts)
+    vertex((this.c2 + 0.5)*this.ts, (this.c1 - 0.5)*this.ts)
+    vertex(this.c1*this.ts, this.c1*this.ts)
+    vertex((this.c2 + 0.5)*this.ts, (this.c1 + 0.5)*this.ts)
+    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
+    vertex((this.c2 + 1.5)*this.ts, (this.c1 + 0.5)*this.ts)
+    vertex(this.c1*this.ts, this.c1*this.ts)
+    vertex((this.c2 + 1.5)*this.ts, (this.c1 - 0.5)*this.ts)
+    endShape(CLOSE)
 
-    // centre square
+    //triangle highlight
     fill(this.boardColours.tertiary);
-    quad(this.c1*this.ts, this.c2*this.ts, this.c2*this.ts, this.c1*this.ts, this.bw-this.c1*this.ts, this.bh-this.c2*this.ts, this.bw-this.c2*this.ts, this.bh-this.c1*this.ts);
+    beginShape();
+    vertex(this.c1*this.ts, this.c2*this.ts)
+    vertex((this.c2 + 1.5)*this.ts, (this.c1 - 0.5)*this.ts)
+    vertex((this.c1 + 2.5)*this.ts, (this.c2 - 1.5)*this.ts)
+    vertex((this.c1 + 2)*this.ts, (this.c2 - 2)*this.ts)
+    endShape(CLOSE)
+
+    beginShape();
+    vertex(this.c1*this.ts, this.c2*this.ts)
+    vertex((this.c2 + 0.5)*this.ts, (this.c1 - 0.5)*this.ts)
+    vertex((this.c1 - 2.5)*this.ts, (this.c1 - 2.5)*this.ts)
+    vertex((this.c1 - 2)*this.ts, (this.c1 - 3)*this.ts)
+    endShape(CLOSE)
+
+    beginShape();
+    vertex((this.c2 + 0.5)*this.ts, (this.c1 + 0.5)*this.ts)
+    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
+    vertex((this.c1 - 2)*this.ts, (this.c1 + 3)*this.ts)
+    vertex((this.c1 - 2.5)*this.ts, (this.c1 + 2.5)*this.ts)
+    endShape(CLOSE)
+
+    beginShape();
+    vertex(this.bw-this.c1*this.ts, this.bh-this.c2*this.ts)
+    vertex((this.c2 + 1.5)*this.ts, (this.c1 + 0.5)*this.ts)
+    vertex((this.c1 + 2.5)*this.ts, (this.c1 + 2.5)*this.ts)
+    vertex((this.c1 + 2)*this.ts, (this.c1 + 3)*this.ts)
+    endShape(CLOSE)
 
     // gridlines
     stroke('black');
     strokeWeight(2);
     for (let s = 2*this.ts; s <= this.bw; s += this.ts) {
+        if (s === 6*this.ts) {
+            strokeWeight(4);
+            stroke('beige');
+        }
         line(0, s, s, 0);
         line(this.bw-s, this.bh, this.bw, this.bh-s);
         line(this.bw-s, 0, this.bw, s);
