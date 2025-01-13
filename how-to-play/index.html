@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Diagon</title>
+    <link rel="stylesheet" href="/diagon/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Bevan&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <script src="script.js" defer></script> -->
+  </head>
+
+  <body class="bg-diagon-light">
+    <nav class="bg-diagon-dark fixed h-screen w-32 px-2.5 flex flex-col justify-around text-white">
+      <a class="text-center" href="/diagon/">Home</a>
+      <a class="text-center" href="/diagon/profile/">Profile</a>
+      <a class="text-center" href="/diagon/how-to-play">How to play</a>
+      <a class="text-center" href="/diagon/customise">Customise</a>
+      <a class="text-center" href="/diagon/settings">Settings</a>
+    </nav>
+    <main class="h-screen ml-32">
+        <div class="p-28 pt-10 pb-10">
+          <div class="p-20 w-full bg-diagon-dark">
+            <h1 class="text-center">How To Play</h1>
+            <div class="grid grid-cols-1 justify-center text-center text-2xl pb-10 gap-10">
+                <p class="font-bold">Objective:</p>
+                <p>To have highest number of points on the board at the end of a set.</p>
+            </div>
+            <div class="grid grid-cols-2 justify-center text-2xl text-center gap-10">
+                <p class="font-bold">Key terms:</p>
+                <p class="font-bold">Reference Images:</p>
+                <p>1. Stones: these are the movable playing pieces.</p>
+                <img src="/diagon/assets/Stones/stone-1.png" class="w-20 m-auto">
+                <p>2. King Stones: These stones can only move diagonally along the board and are the only stones to be able to occupy the win squares. Your can identify a King Stone by its white outline.</p>
+                <img src="/diagon/assets/Stones/King stone-1.png" class="w-20 m-auto">
+                <p>3. Tiles: these are the areas where a stone can be placed on the board. There are 76 tiles in total. The triangles on the side are also considered full tiles.</p>
+                <img src="/diagon/assets/how to play/board.png" class="w-24 m-auto pt-5">
+                <p>4. Win Square: a win square is the square that the King stone must be on to win the game. No other stones can be placed on this square</p>
+                <img src="/diagon/assets/how to play/win squares.png" class="w-24 m-auto pt-5">
+                <p>5. Winning Triangle: All of your pieces must be placed in your opponents Winning Triangle to win the game. Winning triangles are highlighted in white.</p>
+                <img src="/diagon/assets/how to play/win triangle.png" class="w-24 m-auto pt-5">
+                <p>8. Move: to move you must shift one stone to the end of its row, or up against another stone already in that row stones cannot move diagonally. King stones however, can only move diagonally.</p>
+                <img src="/diagon/assets/how to play/correct and incorrect moves.png" class="h-24 m-auto">
+            </div>
+            <div class="grid grid-cols-1 justify-center text-center text-2xl p-10 gap-10">
+                <p class="font-bold">Basic Movements:</p>
+                <p>To move, click on the stone you would like to move, and then click on the highlighted square you would like to move it to. You can also drag your stone of choice to a highlighted tile. Stones can only be moved to the end of their row or up to another stone.</p>
+                <p class="font-bold">To Win:</p>
+                <p>To win the game, you must move your pieces into the opposite Winning Triangle and have you King Stone in the Winning Square before your opponent.</p>
+          </div>
+        </div>
+    </main>
+  </body>
+</html>

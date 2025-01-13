@@ -10,3 +10,9 @@
     @apply text-3xl font-normal;
   }
 }
+
+@layer utilities {
+  #stones img {
+    @apply p-4;
+  }
+}
