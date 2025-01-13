@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["*.html","play/*/*.html"],
+  content: ["*.html","*/*.html","play/*/*.html"],
   theme: {
     fontFamily: {
       normal: 'Alfa Slab One, Arial Black, sans-serif',
