@@ -435,7 +435,7 @@ video {
 }
 
 h1 {
-  font-family: Alfa Slab One;
+  font-family: Alfa Slab One, Arial Black, sans-serif;
   font-size: 4.5rem;
   line-height: 1;
   font-weight: 400;
@@ -443,7 +443,7 @@ h1 {
 }
 
 h2 {
-  font-family: Alfa Slab One;
+  font-family: Alfa Slab One, Arial Black, sans-serif;
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 400;
@@ -799,7 +799,7 @@ h2 {
 }
 
 .font-normal {
-  font-family: Alfa Slab One;
+  font-family: Alfa Slab One, Arial Black, sans-serif;
 }
 
 .text-2xl {

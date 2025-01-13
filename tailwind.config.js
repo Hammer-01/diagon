@@ -3,7 +3,7 @@ module.exports = {
   content: ["*.html", "*/*.html"],
   theme: {
     fontFamily: {
-      normal: 'Alfa Slab One',
+      normal: 'Alfa Slab One, Arial Black, sans-serif',
     },
     extend: {
       colors: {
