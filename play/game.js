@@ -299,7 +299,7 @@ class Stone {
         /** The player who owns the stone @type {Player} */
         this.player = player; // is this necessary / a good idea
         /** The image of the stone @type {p5.Image} */
-        this.img = loadImage(`https://hammer-01.github.io/diagon/assets/Stones/stone-${id}.png`); // TODO: change link when merged
+        this.img = loadImage(`https://hammer-01.github.io/diagon/assets/stones/stone-${id}.png`); // TODO: change link when merged
         /** The position of the stone @type {Tile} */
         this.pos = position || null;
     }
