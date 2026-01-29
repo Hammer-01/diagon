@@ -48,6 +48,13 @@ class Diagon {
             }
         }
         console.log(this.boardRep);
+
+        // setup event handlers
+        window.mouseClicked = this.handleMouseClick.bind(this);
+        window.mousePressed = this.handleMousePress.bind(this);
+        window.mouseReleased = this.handleMouseRelease.bind(this);
+        window.mouseMoved = this.handleMouseMove.bind(this);
+        window.mouseDragged = this.handleMouseDrag.bind(this);
     }
 
     /**
