@@ -12,7 +12,7 @@ function setup() {
     pixelDensity(2 * pixelDensity()); // fix poor drawing quality
     diagon = new Diagon(players);
     // setup starting position
-    let stonePositions = [[2, 5], [4, 7], [0, 5], [4, 9], [4, 5]];
+    let stonePositions = [[3, 5], [2, 4], [3, 7], [0, 4], [3, 4]];
     let positionMap = new Map();
     for (let i in players) {
         positionMap.set(players[i], stonePositions.map((x, j) => [...x, players[i].stones[j]]));
