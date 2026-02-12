@@ -145,12 +145,14 @@ class Diagon {
      * Returns the (screen space) coordinates of the tile at the given (board rep) coordinates
      * @param {number} row the row of the board representation
      * @param {number} col the column of the board representation
+     * @param {boolean} [centre=true] whether to return the centre of the tile, or the left corner if false
      * @returns {[x: number, y: number]} the (screen space) coordinates of the tile at the given (board rep) coordinates
      */
-    getCoordsFromBoardRep(row, col) {
+    getCoordsFromBoardRep(row, col, centre = true) {
         let offset = height / 2 - this.board.tl * this.board.hnt;
         let leftCorner = rotateVectorClockwise([floor(row) * this.board.tl + offset, floor(col) * this.board.tl + offset], -QUARTER_PI);
-        return [leftCorner[0] + this.board.hts, leftCorner[1]];
+        if (centre) return [leftCorner[0] + this.board.hts, leftCorner[1]];
+        return leftCorner;
     }
 
     getSideStoneFromCoords(x, y) {
@@ -179,114 +181,111 @@ class Diagon {
         return null;
     }
 
-    findPosition([x, y]) {
+    /**
+     * Returns the valid moves for the given (board rep) coordinates
+     * @param {number} row the row of the board representation
+     * @param {number} col the column of the board representation
+     * @returns {[number, number][]} a list of (screen space) coordinates representing the valid moves
+     */
+    findValidMoves(row, col) {
         let coordsList = [];
-        let originalX = x = floor(x);
-        let originalY = y = floor(y);
+        let originalRow = row = floor(row);
+        let originalCol = col = floor(col);
 
-        let stone = diagon.boardRep[x][y].stone ?? this.grabbedStone?.stone;
+        /** Pushes the coordinates to the list if they are not the original coordinates */
+        let pushCoords = (row, col) => {
+            if (row !== originalRow || col !== originalCol) {
+                coordsList.push(this.getCoordsFromBoardRep(row, col, false));
+            }
+        };
+
+        let stone = diagon.boardRep[row][col].stone ?? this.grabbedStone?.stone;
         if (stone instanceof Jim) {
-            while (x >= 0) {
-                x--;
-                y--;
-                if (y < 0 || x < 0 || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x + 1, y + 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+            while (row >= 0) {
+                row--;
+                col--;
+                if (col < 0 || row < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row + 1, col + 1, false);
                     break;
                 }
             }
-            x = originalX;
-            y = originalY;
-            while (y < this.board.numTiles) {
-                x++;
-                y++;
+            row = originalRow;
+            col = originalCol;
+            while (col < this.board.numTiles) {
+                row++;
+                col++;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (x >= this.board.numTiles || y >= this.board.numTiles || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x - 1, y - 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (row >= this.board.numTiles || col >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row - 1, col - 1, false);
                     break;
                 }
             }
 
             // check other direction
-            x = originalX;
-            y = originalY
-            while (y >= 0) {
-                y--;
-                x++;
+            row = originalRow;
+            col = originalCol
+            while (col >= 0) {
+                col--;
+                row++;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (x >= this.board.numTiles || y < 0 || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x - 1, y + 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (row >= this.board.numTiles || col < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row - 1, col + 1, false);
                     break;
                 }
             }
-            y = originalY;
-            x = originalX;
-            while (y < this.board.numTiles) {
-                y++;
-                x--;
+            col = originalCol;
+            row = originalRow;
+            while (col < this.board.numTiles) {
+                col++;
+                row--;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (x < 0 || y >= this.board.numTiles || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x + 1, y - 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (row < 0 || col >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row + 1, col - 1, false);
                     break;
                 }
             }
         } else {
-            while (x >= 0) {
-                x--;
+            while (row >= 0) {
+                row--;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (x < 0 || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x + 1, y);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (row < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row + 1, col, false);
                     break;
                 }
             }
-            x = originalX;
-            while (x < this.board.numTiles) {
-                x++;
+            row = originalRow;
+            while (row < this.board.numTiles) {
+                row++;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (x >= this.board.numTiles || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x - 1, y);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (row >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row - 1, col, false);
                     break;
                 }
             }
             
             // check other direction
-            x = originalX;
-            while (y >= 0) {
-                y--;
+            row = originalRow;
+            while (col >= 0) {
+                col--;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (y < 0 || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x, y + 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (col < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row, col + 1, false);
                     break;
                 }
             }
-            y = originalY;
-            while (y < this.board.numTiles) {
-                y++;
+            col = originalCol;
+            while (col < this.board.numTiles) {
+                col++;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
-                if (y >= this.board.numTiles || diagon.boardRep[x][y].isWall || diagon.boardRep[x][y].stone) {
-                    let tileCoords = this.getCoordsFromBoardRep(x, y - 1);
-                    tileCoords[0] -= this.board.hts;
-                    coordsList.push(tileCoords);
+                if (col >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
+                    pushCoords(row, col - 1, false);
                     break;
                 }
             }
@@ -314,9 +313,10 @@ class Diagon {
         if (grabbedStone) {
             cursor('grabbing');
             this.grabbedStone = grabbedStone;
-            let tile = this.getTileFromCoords(mouseX, mouseY);
+            let [boardX, boardY] = this.getBoardRepRelativeCoords(mouseX, mouseY);
+            let tile = this.getTileFromBoardRepRelativeCoords(boardX, boardY);
             tile.stone = null;
-            let coordsList = this.findPosition(this.getBoardRepRelativeCoords(mouseX, mouseY))
+            let coordsList = this.findValidMoves(boardX, boardY);
             this.board.setHighlightedTiles(...coordsList);
         }
     }
@@ -352,11 +352,9 @@ class Diagon {
         stone.setPosition(mouseX + offsetX, mouseY + offsetY);
         let [boardX, boardY] = this.getBoardRepRelativeCoords(mouseX, mouseY);
         let tile = this.getTileFromBoardRepRelativeCoords(boardX, boardY);
-        let coordsList = this.findPosition(originalPos);
+        let coordsList = this.findValidMoves(...originalPos);
         if (tile && !tile.isWall && !tile.stone) {
-            let tileCoords = this.getCoordsFromBoardRep(boardX, boardY);
-            tileCoords[0] -= this.board.hts;
-            coordsList.push(tileCoords);
+            coordsList.push(this.getCoordsFromBoardRep(boardX, boardY, false));
         } else {
             // this.board.clearHighlightedTiles();
         }
@@ -420,7 +418,7 @@ class Board {
             highlight: "#fff8"
         };
 
-        /** An array of highlighted tiles as a list of (screen space) coordinates @type {...number[]} */
+        /** An array of highlighted tiles as a list of (screen space) coordinates @type {[number, number][]} */
         this.highlightedTiles = [];
     }
 
@@ -538,7 +536,7 @@ class Board {
 
     /**
      * Sets tiles to be highlighted
-     * @param {...number[]} coordsList A list of (screen space) coordinates
+     * @param {...[number, number]} coordsList A list of (screen space) coordinates
      */
     setHighlightedTiles(...coordsList) {
         this.highlightedTiles = coordsList;
