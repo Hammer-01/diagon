@@ -189,18 +189,65 @@ class Diagon {
      */
     findValidMoves(row, col) {
         let coordsList = [];
+        let highlightedCoords = [];
+        let jumpedStones = [];
         let originalRow = row = floor(row);
         let originalCol = col = floor(col);
+        // 0: top, 1:bottom (assuming in friend mode)
+        let target0 = [this.board.numTiles/2,(this.board.numTiles/2) - 1];
+        let target1 = [(this.board.numTiles/2) - 1,this.board.numTiles/2];
 
         /** Pushes the coordinates to the list if they are not the original coordinates */
         let pushCoords = (row, col) => {
             if (row !== originalRow || col !== originalCol) {
                 coordsList.push(this.getCoordsFromBoardRep(row, col, false));
+                console.log(coordsList);
             }
+        };
+
+        //check each box surrounding the Jim
+        let jimJump = (originalRow, originalCol) => {
+            let col = originalCol - 1;
+            let row = originalRow;
+            let rowDirection;
+            let colDirection;
+            let outerRow;
+            let outerCol;
+            let center = this.board.numTiles/2;
+
+            while (col <= originalCol + 1) {
+                row = originalRow - 1;
+                while (row <= originalRow + 1) {
+                    rowDirection = row - originalRow;
+                    colDirection = col - originalCol;
+                    outerRow = row + rowDirection;
+                    outerCol = col + colDirection;
+                    
+                    if (row >= 0 && row < this.board.numTiles && col >= 0 && col < this.board.numTiles
+                        && this.boardRep[row][col].stone
+                        && this.boardRep[outerRow]?.[outerCol] && !this.boardRep[outerRow][outerCol].isWall && !this.boardRep[outerRow][outerCol].stone
+                        && (!((row === center - 1 && col === center) || (row === center && col === center - 1)))
+                        && !highlightedCoords.some(c => c.row === outerRow && c.col === outerCol)
+                        && !jumpedStones.some(c => c.row === row && c.col === col)
+                        && !(this.boardRep[row][col].stone instanceof Jim && ((outerRow === target0[0] && outerCol === target0[1]) || (outerRow === target1[0] && outerCol === target1[1])))) {
+                        highlightedCoords.push({row:outerRow, col:outerCol});
+                        jumpedStones.push({row:row, col:col})
+                        pushCoords(outerRow, outerCol, false);
+                        jimJump(outerRow, outerCol);
+                    }
+                    row++;
+                }
+                col++;
+            }
+            
         };
 
         let stone = diagon.boardRep[row][col].stone ?? this.grabbedStone?.stone;
         if (stone instanceof Jim) {
+            // jumping Jim
+            jimJump(originalRow, originalCol);
+
+            //noraml movement 
             while (row >= 0) {
                 row--;
                 col--;
@@ -231,8 +278,10 @@ class Diagon {
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (row >= this.board.numTiles || col < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row - 1, col + 1, false);
-                    break;
+                    if (!(row === target0[0] && col === target0[1])) {
+                        pushCoords(row - 1, col + 1, false);
+                    }
+                    break;               
                 }
             }
             col = originalCol;
@@ -240,20 +289,27 @@ class Diagon {
             while (col < this.board.numTiles) {
                 col++;
                 row--;
+                console.log("row",row)
+                console.log("col",col)
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (row < 0 || col >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row + 1, col - 1, false);
+                    if (!(row === target1[0] && col === target1[1])) {
+                        pushCoords(row + 1, col - 1, false);
+                    }
                     break;
                 }
             }
+            
         } else {
             while (row >= 0) {
                 row--;
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (row < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row + 1, col, false);
+                    if (!(row + 1 === target0[0] && col === target0[1]) && !(row + 1 === target1[0] && col === target1[1])) {
+                        pushCoords(row + 1, col, false);
+                    }
                     break;
                 }
             }
@@ -263,7 +319,9 @@ class Diagon {
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (row >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row - 1, col, false);
+                    if (!(row - 1 === target0[0] && col === target0[1]) && !(row - 1 === target1[0] && col === target1[1])) {
+                        pushCoords(row - 1, col, false);
+                    }
                     break;
                 }
             }
@@ -275,7 +333,9 @@ class Diagon {
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (col < 0 || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row, col + 1, false);
+                    if (!(row === target0[0] && col + 1 === target0[1]) && !(row === target1[0] && col + 1 === target1[1])) {
+                        pushCoords(row, col + 1, false);    
+                    }
                     break;
                 }
             }
@@ -285,7 +345,9 @@ class Diagon {
                 // check for if the piece is a wall or if it has a stone
                 // if yes then return and highlight the x and y before than point
                 if (col >= this.board.numTiles || diagon.boardRep[row][col].isWall || diagon.boardRep[row][col].stone) {
-                    pushCoords(row, col - 1, false);
+                    if (!(row === target0[0] && col - 1 === target0[1]) && !(row === target1[0] && col - 1 === target1[1])) {
+                        pushCoords(row, col - 1, false);
+                    }
                     break;
                 }
             }
@@ -392,6 +454,8 @@ class Board {
         }
         /** half numTiles @type {number} */
         this.hnt = this.numTiles / 2;
+
+        
 
         /** tile size (diagonal length) @type {number} */
         this.ts = width / ((this.numTiles + 6) / 2);
